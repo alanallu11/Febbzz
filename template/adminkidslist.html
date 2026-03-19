@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>All Products | Febz Couture</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:'Inter',sans-serif;
+}
+
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:25px 70px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.logo-img{
+    width:64px;
+    height:64px;
+    border-radius:50%;
+}
+
+.logo-text{
+    font-family:'Playfair Display',serif;
+    font-size:28px;
+    letter-spacing:3px;
+}
+
+/* HEADER */
+.page-header{
+    text-align:center;
+    padding:80px 20px 50px;
+}
+
+.page-header h1{
+    font-family:'Playfair Display',serif;
+    font-size:46px;
+    letter-spacing:3px;
+}
+
+/* TABLE STYLE */
+.table-container{
+    width:90%;
+    margin:40px auto 80px;
+    border:1px solid rgba(255,255,255,0.15);
+    background:#050505;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th, td{
+    padding:18px;
+    text-align:center;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+th{
+    font-family:'Playfair Display',serif;
+    letter-spacing:2px;
+    font-size:14px;
+}
+
+td{
+    font-size:14px;
+    color:rgba(255,255,255,0.8);
+}
+
+.product-img{
+    width:80px;
+    border:1px solid rgba(255,255,255,0.2);
+}
+
+/* BUTTONS */
+.btn{
+    padding:8px 16px;
+    border:none;
+    cursor:pointer;
+    font-size:12px;
+    letter-spacing:1px;
+    transition:0.3s;
+    margin:2px;
+}
+
+.edit-btn{
+    background:#ffd7a0;
+    color:#000;
+}
+
+.edit-btn:hover{
+    background:#ffbf75;
+}
+
+.delete-btn{
+    background:#ff6b6b;
+    color:#fff;
+}
+
+.delete-btn:hover{
+    background:#ff4040;
+}
+
+/* FOOTER */
+.footer{
+    padding:40px;
+    border-top:1px solid rgba(255,255,255,0.1);
+    text-align:center;
+    font-size:13px;
+    color:rgba(255,255,255,0.6);
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo-area">
+        <img src="{% static 'images/Febzlogo.jpeg' %}" class="logo-img">
+        <span class="logo-text">FEBZ COUTURE</span>
+    </div>
+</div>
+
+<!-- HEADER -->
+<section class="page-header">
+    <h1>All Kids Products</h1>
+</section>
+
+<!-- TABLE -->
+<div class="table-container">
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Action</th>
+    </tr>
+
+    {% for i in kiddu %}
+    <tr>
+        <td>{{ i.kidsname }}</td>
+        <td>₹{{ i.kidsprice }}</td>
+        <td>{{ i.kidsdescription }}</td>
+        <td>
+            <img src="{{ i.kidsimage.url }}" class="product-img">
+        </td>
+        <td>
+
+            <!-- EDIT -->
+            <a href="{% url 'adminkidsedit' i.id %}">
+                <button class="btn edit-btn">Edit</button>
+            </a>
+
+            <!-- DELETE -->
+            <form action="{% url 'adminkidsdelete' i.id %}" 
+                  method="POST" 
+                  style="display:inline;"
+                  onsubmit="return confirm('Are you sure you want to delete this product?');">
+                {% csrf_token %}
+                <button type="submit" class="btn delete-btn">Delete</button>
+            </form>
+
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">No products available</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 FEBZ COUTURE · Luxury Collection
+</div>
+
+</body>
+</html>

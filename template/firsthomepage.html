@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Febz Couture | Luxury Fashion</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 70px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+}
+
+.nav-links a {
+    margin-left: 35px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    width: 0;
+    height: 1px;
+    background: #fff;
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    transition: 0.3s;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* ===== HERO ===== */
+.hero {
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    letter-spacing: 4px;
+}
+
+.hero-content p {
+    margin-top: 18px;
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 2px;
+}
+
+.hero-content button {
+    margin-top: 40px;
+    padding: 14px 45px;
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    font-size: 13px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.hero-content button:hover {
+    background: #fff;
+    color: #000;
+}
+
+/* ===== COLLECTIONS ===== */
+.collections {
+    padding: 90px 70px;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.collection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+}
+
+.collection-card {
+    height: 380px;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: 0.4s;
+}
+
+.collection-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+}
+
+.collection-card h2 {
+    position: relative;
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    letter-spacing: 2px;
+}
+
+.collection-card:hover {
+    transform: scale(1.03);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    padding: 50px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">
+        FEBZ COUTURE
+        <!-- LOGO IMAGE CAN BE PLACED HERE -->
+    </div>
+
+    <div class="nav-links">
+        <!-- <a href="#">Ladies</a>
+        <a href="#">Kids</a>
+        <a href="#">Wishlist</a>
+        <a href="#">Cart</a>
+        <a href="#">Account</a> -->
+        <a href="login">LOGIN</a>
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Elegance in Every Thread</h1>
+        <p>PREMIUM COUTURE · LIMITED EDITION</p>
+        <a href="login"><button>EXPLORE COLLECTION</button></a>
+    </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section class="collections">
+    <h2 class="section-title">Our Signature Collections</h2>
+
+    <div class="collection-grid">
+        <div class="collection-card">
+            <a href="login" style="text-decoration: none; color: white;">
+    <h2 style="margin: 0;">Ladies Couture</h2>
+</a>
+
+        </div>
+
+        <div class="collection-card">
+            <a href="login" style="text-decoration: none; color: white;">
+    <h2 style="margin: 0;">Kids Couture</h2>
+</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 FEBZ COUTURE · Crafted with Elegance
+</div>
+
+</body>
+</html>

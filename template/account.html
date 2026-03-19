@@ -1,0 +1,681 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Febz Couture | My Account</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold: #ffd7a0;
+  --gold-dim: rgba(255, 215, 160, 0.12);
+  --gold-line: rgba(255, 215, 160, 0.25);
+  --white: #fff;
+  --white-muted: rgba(255,255,255,0.52);
+  --white-subtle: rgba(255,255,255,0.05);
+  --black: #000;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── GRAIN ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.4;
+}
+
+/* ─── NAVBAR ─── */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 80px;
+  border-bottom: 1px solid var(--gold-line);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(18px);
+}
+
+.logo-area { display: flex; align-items: center; gap: 14px; }
+
+.logo-img {
+  width: 52px; height: 52px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--gold-line);
+  transition: all 0.4s ease;
+}
+.logo-img:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 20px rgba(255,215,160,0.5), 0 0 48px rgba(255,190,110,0.28);
+}
+
+.logo-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 5px;
+  color: var(--gold);
+}
+
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a {
+  text-decoration: none;
+  color: var(--white-muted);
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.3s;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.35s ease;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after,
+.nav-links a.active::after { width: 100%; }
+.nav-links a.active { color: var(--gold); }
+
+/* ─── PAGE HEADER ─── */
+.page-header {
+  padding: 90px 80px 70px;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::before {
+  content: 'ACCOUNT';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(60px, 11vw, 148px);
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: rgba(255,215,160,0.03);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.header-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gold-line);
+  padding-bottom: 28px;
+}
+
+.header-left { display: flex; flex-direction: column; gap: 14px; }
+
+.header-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.header-eyebrow span {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.eyebrow-line { width: 36px; height: 1px; background: var(--gold-line); }
+
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 62px);
+  font-weight: 300;
+  letter-spacing: 6px;
+  line-height: 1.1;
+}
+.page-title em { font-style: italic; color: var(--gold); }
+
+.logged-in-as {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+  align-self: flex-end;
+}
+.logged-in-as span { color: var(--gold); }
+
+/* ─── ACCOUNT BODY ─── */
+.account-body {
+  padding: 70px 80px 100px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2px;
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  border-right: 1px solid var(--gold-line);
+  padding-right: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  animation: fadeUp 0.6s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Avatar */
+.avatar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 0 36px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 28px;
+}
+
+.avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+.avatar-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.avatar-role {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+}
+
+/* Sidebar nav items */
+.sidebar-nav { display: flex; flex-direction: column; gap: 4px; }
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+  color: var(--gold);
+  border-color: var(--gold-line);
+  background: var(--gold-dim);
+}
+
+.sidebar-item .item-icon { font-size: 16px; opacity: 0.7; }
+
+/* Quick stats */
+.quick-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin-top: 28px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 28px;
+}
+
+.stat-box {
+  padding: 16px 12px;
+  text-align: center;
+  background: var(--white-subtle);
+}
+
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--gold);
+  display: block;
+}
+
+.stat-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+  margin-top: 4px;
+  display: block;
+}
+
+/* ─── MAIN CONTENT ─── */
+.main-content {
+  padding-left: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: fadeUp 0.6s ease 0.1s both;
+}
+
+/* ─── INFO CARD ─── */
+.info-card {
+  background: var(--white-subtle);
+  border: 1px solid transparent;
+  padding: 36px 40px;
+  transition: border-color 0.4s;
+}
+
+.info-card:hover { border-color: var(--gold-line); }
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+.card-badge {
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold-line);
+  padding: 4px 10px;
+}
+
+/* Field rows */
+.field-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  gap: 20px;
+}
+
+.field-row:last-of-type { border-bottom: none; }
+
+.field-label {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+}
+
+.field-value {
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  color: var(--white);
+}
+
+/* ─── EDIT CARD (email form) ─── */
+.edit-card {
+  background: var(--white-subtle);
+  border: 1px solid transparent;
+  padding: 36px 40px;
+  transition: border-color 0.4s;
+  margin-top: 2px;
+}
+
+.edit-card:hover { border-color: var(--gold-line); }
+
+.form-group { margin-top: 20px; }
+
+.form-group label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+  margin-bottom: 10px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-bottom-color: rgba(255,255,255,0.22);
+  color: var(--white);
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  outline: none;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.form-group input:focus {
+  border-color: var(--gold-line);
+  background: rgba(255,215,160,0.04);
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.btn-update {
+  padding: 14px 40px;
+  background: var(--gold);
+  color: #000;
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.35s;
+}
+
+.btn-update::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #000;
+  transform: translateX(-101%);
+  transition: transform 0.35s ease;
+}
+.btn-update:hover::before { transform: translateX(0); }
+.btn-update span { position: relative; z-index: 1; }
+.btn-update:hover span { color: var(--gold); }
+
+.btn-logout {
+  padding: 14px 40px;
+  background: transparent;
+  color: var(--white-muted);
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.12);
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-block;
+}
+.btn-logout:hover { border-color: #ff6b6b; color: #ff6b6b; }
+
+/* ─── SUCCESS TOAST (JS) ─── */
+.toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--gold);
+  color: #000;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 14px 36px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s, transform 0.4s;
+  z-index: 1000;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  padding: 50px 80px;
+  border-top: 1px solid var(--gold-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 5px;
+  color: var(--gold);
+}
+.footer-copy {
+  font-size: 11px;
+  color: var(--white-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.footer-ornament {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  color: var(--gold-line);
+  letter-spacing: 8px;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .account-body { grid-template-columns: 1fr; }
+  .sidebar { border-right: none; border-bottom: 1px solid var(--gold-line); padding-right: 0; padding-bottom: 40px; }
+  .main-content { padding-left: 0; padding-top: 40px; }
+}
+@media (max-width: 768px) {
+  .navbar { padding: 20px 24px; }
+  .logo-text { display: none; }
+  .nav-links { gap: 18px; }
+  .page-header { padding: 60px 24px 48px; }
+  .header-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .account-body { padding: 40px 24px 60px; }
+  .info-card, .edit-card { padding: 24px 20px; }
+  .field-row { grid-template-columns: 1fr; gap: 4px; }
+  .footer { flex-direction: column; gap: 18px; text-align: center; padding: 40px 24px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo-area">
+    <img src="{% static 'images/Febzlogo.jpeg' %}" alt="Febz Logo" class="logo-img">
+    <span class="logo-text">FEBZ COUTURE</span>
+  </div>
+
+  <div class="nav-links">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'women' %}">Ladies</a>
+    <a href="{% url 'kids' %}">Kids</a>
+    <a href="{% url 'cart' %}">Cart</a>
+    <a href="{% url 'wishlist' %}">Wishlist</a>
+    <a href="{% url 'account' %}" class="active">Account</a>
+    <a href="{% url 'logout' %}">Logout</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="header-eyebrow">
+        <span class="eyebrow-line"></span>
+        <span>Member Profile</span>
+        <span class="eyebrow-line"></span>
+      </div>
+      <h1 class="page-title">My <em>Account</em></h1>
+    </div>
+    <p class="logged-in-as">Logged in as &nbsp;<span>{{ user.username }}</span></p>
+  </div>
+</header>
+
+<!-- ACCOUNT BODY -->
+<div class="account-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Avatar -->
+    <div class="avatar-wrap">
+      <div class="avatar">{{ user.username|first|upper }}</div>
+      <span class="avatar-name">{{ user.username }}</span>
+      <span class="avatar-role">Member</span>
+    </div>
+
+    <!-- Nav Items -->
+    <nav class="sidebar-nav">
+      <a href="{% url 'account' %}" class="sidebar-item active">
+        <span class="item-icon">◈</span> Profile
+      </a>
+      <a href="{% url 'cart' %}" class="sidebar-item">
+        <span class="item-icon">◈</span> My Cart
+      </a>
+      <a href="{% url 'wishlist' %}" class="sidebar-item">
+        <span class="item-icon">◈</span> Wishlist
+      </a>
+      <a href="{% url 'logout' %}" class="sidebar-item">
+        <span class="item-icon">◈</span> Logout
+      </a>
+    </nav>
+
+    <!-- Quick Stats -->
+    <div class="quick-stats">
+      <div class="stat-box">
+        <span class="stat-number">{{ cart_count|default:"0" }}</span>
+        <span class="stat-label">Cart</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number">{{ wish_count|default:"0" }}</span>
+        <span class="stat-label">Wishlist</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <!-- Profile Info Card -->
+    <div class="info-card">
+      <div class="card-header">
+        <h2 class="card-title">Profile Details</h2>
+        <span class="card-badge">Active Member</span>
+      </div>
+
+      <div class="field-row">
+        <span class="field-label">Username</span>
+        <span class="field-value">{{ user.username }}</span>
+      </div>
+
+      <div class="field-row">
+        <span class="field-label">Email</span>
+        <span class="field-value">{{ user.email }}</span>
+      </div>
+
+      <div class="field-row">
+        <span class="field-label">Member Since</span>
+        <span class="field-value">{{ user.date_joined|date:"F Y" }}</span>
+      </div>
+
+      <div class="field-row">
+        <span class="field-label">Status</span>
+        <span class="field-value" style="color:var(--gold);">✦ &nbsp;Active</span>
+      </div>
+    </div>
+
+    <!-- Email Update Card -->
+    <div class="edit-card">
+      <div class="card-header">
+        <h2 class="card-title">Update Email</h2>
+        <span class="card-badge">Editable</span>
+      </div>
+
+      <form method="POST" action="{% url 'update_email' %}" onsubmit="showToast()">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" value="{{ user.email }}" required>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-update"><span>Update Email</span></button>
+          <a href="{% url 'logout' %}" class="btn-logout">Logout</a>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✦ &nbsp; Email Updated Successfully</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span class="footer-logo">FEBZ COUTURE</span>
+  <span class="footer-ornament">✦ ✦ ✦</span>
+  <span class="footer-copy">© 2026 · Crafted with Elegance</span>
+</footer>
+
+<script>
+  function showToast() {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+</script>
+
+</body>
+</html>

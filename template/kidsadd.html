@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add Ladies Product</title>
+<style>
+body{
+    background:#000;
+    color:#fff;
+    font-family:Inter,sans-serif;
+}
+form{
+    max-width:500px;
+    margin:80px auto;
+    border:1px solid rgba(255,255,255,0.2);
+    padding:40px;
+}
+input, textarea, button{
+    width:100%;
+    margin-top:15px;
+    padding:12px;
+    background:#000;
+    border:1px solid #fff;
+    color:#fff;
+}
+button{
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2>Add Kids Product</h2>
+
+    <input type="text" name="kidsname" placeholder="Product Name" required>
+    <textarea name="kidsdescription" placeholder="Description"></textarea>
+    <input type="number" name="kidsprice" placeholder="Price" required>
+    <input type="file" name="kidsimage" required>
+
+    <button type="submit">ADD PRODUCT</button>
+</form>
+
+</body>
+</html>

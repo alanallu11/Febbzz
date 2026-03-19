@@ -1,0 +1,239 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard | Febz Couture</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:'Inter', sans-serif;
+}
+
+/* ===== HEADER ===== */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:25px 70px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.logo{
+    font-family:'Playfair Display', serif;
+    font-size:26px;
+    letter-spacing:3px;
+}
+
+.header a{
+    color:#fff;
+    text-decoration:none;
+    font-size:13px;
+    letter-spacing:2px;
+    border:1px solid #fff;
+    padding:10px 28px;
+    transition:0.4s;
+}
+
+.header a:hover{
+    background:#fff;
+    color:#000;
+}
+
+/* ===== DASHBOARD ===== */
+.dashboard{
+    padding:80px 70px;
+}
+
+.dashboard h1{
+    font-family:'Playfair Display', serif;
+    font-size:48px;
+    margin-bottom:12px;
+}
+
+.dashboard p{
+    color:rgba(255,255,255,0.6);
+    letter-spacing:1px;
+    margin-bottom:70px;
+}
+
+/* ===== GRID ===== */
+.admin-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:40px;
+}
+
+.card{
+    border:1px solid rgba(255,255,255,0.15);
+    padding:40px;
+    height:230px;
+    position:relative;
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:#fff;
+}
+
+.card h2{
+    font-family:'Playfair Display', serif;
+    font-size:26px;
+    margin-bottom:14px;
+}
+
+.card span{
+    font-size:13px;
+    color:rgba(255,255,255,0.6);
+}
+
+.card a{
+    position:absolute;
+    bottom:30px;
+    left:40px;
+    color:#fff;
+    text-decoration:none;
+    font-size:12px;
+    letter-spacing:2px;
+}
+
+/* ===== STATS ===== */
+.stats{
+    display:flex;
+    gap:40px;
+    margin-bottom:80px;
+}
+
+.stat-box{
+    flex:1;
+    border:1px solid rgba(255,255,255,0.15);
+    padding:35px;
+    text-align:center;
+}
+
+.stat-box h3{
+    font-family:'Playfair Display', serif;
+    font-size:32px;
+}
+
+.stat-box p{
+    font-size:13px;
+    letter-spacing:2px;
+    color:rgba(255,255,255,0.6);
+    margin-top:10px;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+    margin-top:120px;
+    padding:40px;
+    border-top:1px solid rgba(255,255,255,0.1);
+    text-align:center;
+    font-size:13px;
+    color:rgba(255,255,255,0.6);
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+    .admin-grid{
+        grid-template-columns:1fr;
+    }
+    .stats{
+        flex-direction:column;
+    }
+    .header,.dashboard{
+        padding:25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">FEBZ COUTURE · ADMIN</div>
+    <a href="{% url 'logout' %}">LOGOUT</a>
+</div>
+
+<!-- DASHBOARD -->
+<section class="dashboard">
+    <h1>Welcome,{{ f }}</h1>
+    <p>Manage couture collections, orders and customers</p>
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat-box">
+            <h3>128</h3>
+            <p>PRODUCTS</p>
+        </div>
+        <div class="stat-box">
+            <h3>56</h3>
+            <p>ORDERS</p>
+        </div>
+        <div class="stat-box">
+            <h3>92</h3>
+            <p>USERS</p>
+        </div>
+    </div>
+
+    <!-- ADMIN ACTIONS -->
+    <div class="admin-grid">
+
+        <div class="card">
+            <h2>Add Ladies Couture</h2>
+            <span>Manage women’s collections</span>
+            <a href="womenadd">OPEN →</a>
+        </div>
+
+        <div class="card">
+            <h2>Add Kids Couture</h2>
+            <span>Manage kids wear</span>
+            <a href="kidsadd">OPEN →</a>
+        </div>
+        
+        <div class="card">
+            <h2>Update Ladies Couture</h2>
+            <span>Edit ladies Product</span>
+            <a href="adminwomenlist">VIEW →</a>
+        </div>
+
+        <div class="card">
+            <h2>Update Kids Couture</h2>
+            <span>Edit Kids product</span>
+            <a href="adminkidslist">MANAGE →</a>
+        </div>
+
+        <div class="card">
+            <h2>View Ladies Couture</h2>
+            <span>Products in ladies couture</span>
+            <a href="women">CHECK →</a>
+        </div>
+
+        <div class="card">
+            <h2>View Kids Couture</h2>
+            <span>Products in kids couture</span>
+            <a href="kids">EDIT →</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 FEBZ COUTURE · Admin Panel
+</div>
+
+</body>
+</html>

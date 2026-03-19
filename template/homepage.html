@@ -1,0 +1,777 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Febz Couture | Luxury Fashion</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold: #ffd7a0;
+  --gold-dim: rgba(255, 215, 160, 0.18);
+  --gold-line: rgba(255, 215, 160, 0.25);
+  --white: #fff;
+  --white-muted: rgba(255,255,255,0.55);
+  --white-subtle: rgba(255,255,255,0.08);
+  --black: #000;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ─── GRAIN ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.4;
+}
+
+/* ─── NAVBAR ─── */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 80px;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  transition: background 0.5s, border-color 0.5s;
+}
+
+.navbar.scrolled {
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--gold-line);
+}
+
+/* LOGO WRAPPER */
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo a { display: inline-block; line-height: 0; }
+
+.logo img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--gold-line);
+  transition: all 0.4s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 20px rgba(255,215,160,0.55), 0 0 50px rgba(255,190,110,0.3);
+}
+
+.brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 5px;
+  color: var(--gold);
+}
+
+.username {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+  border-left: 1px solid rgba(255,255,255,0.2);
+  padding-left: 14px;
+  font-family: 'Jost', sans-serif;
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--white-muted);
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.35s ease;
+}
+
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero video {
+  position: absolute;
+  top: 50%; left: 50%;
+  min-width: 100%; min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* Multi-layer overlay for depth */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.35) 0%,
+    rgba(0,0,0,0.15) 40%,
+    rgba(0,0,0,0.5) 80%,
+    rgba(0,0,0,0.9) 100%
+  );
+  z-index: -1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  animation: heroReveal 1.4s ease both;
+}
+
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Decorative top line */
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  animation: heroReveal 1.2s ease 0.2s both;
+}
+
+.hero-eyebrow span {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+}
+
+.eyebrow-line {
+  width: 48px;
+  height: 1px;
+  background: var(--gold-line);
+}
+
+.hero-content h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 300;
+  letter-spacing: 6px;
+  line-height: 1.08;
+  animation: heroReveal 1.2s ease 0.35s both;
+}
+
+.hero-content h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-subtitle {
+  margin-top: 22px;
+  font-size: 11px;
+  color: var(--white-muted);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  animation: heroReveal 1.2s ease 0.5s both;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 50px;
+  animation: heroReveal 1.2s ease 0.65s both;
+}
+
+.btn-primary {
+  padding: 16px 52px;
+  background: var(--gold);
+  color: #000;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #000;
+  transform: translateX(-101%);
+  transition: transform 0.4s ease;
+}
+
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+.btn-primary:hover span { color: var(--gold); }
+
+.btn-ghost {
+  padding: 16px 52px;
+  background: transparent;
+  color: var(--white);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: all 0.35s;
+}
+
+.btn-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: heroReveal 1.2s ease 1s both;
+  z-index: 2;
+}
+
+.scroll-hint span {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gold-line), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+/* ─── MARQUEE STRIP ─── */
+.marquee-strip {
+  background: var(--gold);
+  overflow: hidden;
+  padding: 14px 0;
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: inline-block;
+  animation: marqueeScroll 28s linear infinite;
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-track span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: #000;
+  letter-spacing: 3px;
+  margin: 0 40px;
+}
+
+.marquee-track .dot {
+  font-style: normal;
+  font-size: 6px;
+  vertical-align: middle;
+  opacity: 0.6;
+}
+
+/* ─── COLLECTIONS SECTION ─── */
+.collections {
+  padding: 110px 80px;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 64px;
+}
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 300;
+  letter-spacing: 3px;
+  line-height: 1.1;
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.section-desc {
+  font-size: 13px;
+  color: var(--white-muted);
+  letter-spacing: 1.5px;
+  max-width: 280px;
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* COLLECTION GRID — asymmetric */
+.collection-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2px;
+}
+
+.collection-card {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+  color: var(--white);
+}
+
+.collection-card:first-child { height: 600px; }
+.collection-card:last-child  { height: 600px; }
+
+.collection-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Elegant gradient */
+.collection-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(0,0,0,0.1) 0%,
+    rgba(0,0,0,0.1) 40%,
+    rgba(0,0,0,0.75) 100%
+  );
+  z-index: 1;
+  transition: background 0.5s;
+}
+
+.collection-card:hover::before {
+  background: linear-gradient(
+    160deg,
+    rgba(0,0,0,0.2) 0%,
+    rgba(0,0,0,0.2) 40%,
+    rgba(0,0,0,0.82) 100%
+  );
+}
+
+.collection-card:hover img { transform: scale(1.06); }
+
+.card-content {
+  position: absolute;
+  bottom: 44px;
+  left: 40px;
+  z-index: 2;
+}
+
+.card-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  display: block;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.4s ease 0.05s;
+}
+
+.collection-card:hover .card-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(30px, 3.5vw, 46px);
+  font-weight: 300;
+  letter-spacing: 2px;
+  line-height: 1.1;
+}
+
+.card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.4s ease 0.1s;
+}
+
+.collection-card:hover .card-cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-cta::after {
+  content: '→';
+  font-size: 14px;
+  transition: transform 0.3s;
+}
+
+.collection-card:hover .card-cta::after { transform: translateX(4px); }
+
+/* Gold border reveal on hover */
+.collection-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  z-index: 3;
+  transition: border-color 0.4s;
+  pointer-events: none;
+}
+
+.collection-card:hover::after { border-color: var(--gold-line); }
+
+/* ─── PHILOSOPHY STRIP ─── */
+.philosophy {
+  padding: 100px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr;
+  gap: 0;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.philosophy-divider {
+  background: var(--gold-line);
+  align-self: stretch;
+}
+
+.philosophy-item {
+  padding: 0 60px;
+  text-align: center;
+}
+
+.philosophy-item:first-child { padding-left: 0; }
+.philosophy-item:last-child  { padding-right: 0; }
+
+.philosophy-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 56px;
+  font-weight: 300;
+  color: var(--gold-dim);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.philosophy-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.philosophy-text {
+  font-size: 12px;
+  color: var(--white-muted);
+  letter-spacing: 1px;
+  line-height: 1.9;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  padding: 60px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--gold-line);
+}
+
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 5px;
+  color: var(--gold);
+}
+
+.footer-copy {
+  font-size: 11px;
+  color: var(--white-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.footer-ornament {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: var(--gold-line);
+  letter-spacing: 8px;
+}
+
+/* ─── SCROLL ANIMATIONS ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .collections { padding: 80px 40px; }
+  .philosophy { grid-template-columns: 1fr; gap: 40px; }
+  .philosophy-divider { display: none; }
+  .philosophy-item { padding: 0; }
+}
+
+@media (max-width: 900px) {
+  .navbar { padding: 20px 24px; }
+  .collection-grid { grid-template-columns: 1fr; }
+  .collection-card:first-child,
+  .collection-card:last-child { height: 420px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .section-desc { text-align: left; }
+  .footer { flex-direction: column; gap: 20px; text-align: center; }
+  .brand-name { display: none; }
+  .nav-links { gap: 20px; }
+  .hero-actions { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="logo-wrapper">
+    <div class="logo">
+      <a href="{% url 'home' %}">
+        <img src="{% static 'images/Febzlogo.jpeg' %}" alt="Febz Couture Logo">
+      </a>
+    </div>
+    <span class="brand-name">FEBZ COUTURE</span>
+    {% if s %}
+      <span class="username">{{ s }}</span>
+    {% endif %}
+  </div>
+
+  <nav class="nav-links">
+    <a href="women">Ladies</a>
+    <a href="kids">Kids</a>
+    <a href="{% url 'wishlist' %}">Wishlist</a>
+    <a href="cart">Cart</a>
+    <a href="account">Account</a>
+    <a href="{% url 'logout' %}">Logout</a>
+  </nav>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <video autoplay muted loop playsinline>
+    <source src="{% static 'videos/fashion.mp4' %}" type="video/mp4">
+  </video>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-line"></span>
+      <span>New Collection 2026</span>
+      <span class="eyebrow-line"></span>
+    </div>
+
+    <h1>Elegance in<br><em>Every Thread</em></h1>
+    <p class="hero-subtitle">Premium Couture &nbsp;·&nbsp; Limited Edition</p>
+
+    <div class="hero-actions">
+      <a href="women" class="btn-primary"><span>Explore Collection</span></a>
+      <a href="kids"  class="btn-ghost">Kids Couture</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Ladies Couture</span><span class="dot">✦</span>
+    <span>Kids Collection</span><span class="dot">✦</span>
+    <span>Handcrafted Elegance</span><span class="dot">✦</span>
+    <span>Premium Fabrics</span><span class="dot">✦</span>
+    <span>Exclusive Designs</span><span class="dot">✦</span>
+    <span>Limited Edition</span><span class="dot">✦</span>
+    <span>Ladies Couture</span><span class="dot">✦</span>
+    <span>Kids Collection</span><span class="dot">✦</span>
+    <span>Handcrafted Elegance</span><span class="dot">✦</span>
+    <span>Premium Fabrics</span><span class="dot">✦</span>
+    <span>Exclusive Designs</span><span class="dot">✦</span>
+    <span>Limited Edition</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- COLLECTIONS -->
+<section class="collections">
+  <div class="section-header reveal">
+    <div>
+      <p class="section-label">Our Signature</p>
+      <h2 class="section-title">Curated <em>Collections</em></h2>
+    </div>
+    <p class="section-desc">Each piece tells a story of craftsmanship, refined taste, and timeless style.</p>
+  </div>
+
+  <div class="collection-grid reveal">
+    <a href="women" class="collection-card">
+      <img src="{% static 'images/bride.jpeg' %}" alt="Ladies Couture">
+      <div class="card-content">
+        <span class="card-label">Discover</span>
+        <h3 class="card-title">Ladies<br>Couture</h3>
+        <span class="card-cta">Shop Now</span>
+      </div>
+    </a>
+
+    <a href="kids" class="collection-card">
+      <img src="{% static 'images/girl.jpg' %}" alt="Kids Couture">
+      <div class="card-content">
+        <span class="card-label">Discover</span>
+        <h3 class="card-title">Kids<br>Couture</h3>
+        <span class="card-cta">Shop Now</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy">
+  <div class="philosophy-item reveal">
+    <div class="philosophy-number">01</div>
+    <h4 class="philosophy-heading">Artisan Craft</h4>
+    <p class="philosophy-text">Every garment is meticulously handcrafted by skilled artisans who pour their expertise into each stitch.</p>
+  </div>
+  <div class="philosophy-divider"></div>
+  <div class="philosophy-item reveal" style="transition-delay:0.15s">
+    <div class="philosophy-number">02</div>
+    <h4 class="philosophy-heading">Premium Fabrics</h4>
+    <p class="philosophy-text">We source only the finest materials from around the world — silks, organzas, and heritage weaves.</p>
+  </div>
+  <div class="philosophy-divider"></div>
+  <div class="philosophy-item reveal" style="transition-delay:0.3s">
+    <div class="philosophy-number">03</div>
+    <h4 class="philosophy-heading">Timeless Design</h4>
+    <p class="philosophy-text">Our designs transcend seasonal trends, offering pieces that remain elegant and relevant for years to come.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span class="footer-logo">FEBZ COUTURE</span>
+  <span class="footer-ornament">✦ ✦ ✦</span>
+  <span class="footer-copy">© 2026 · Crafted with Elegance</span>
+</footer>
+
+<script>
+// Navbar scroll behaviour
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.15 });
+
+revealEls.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

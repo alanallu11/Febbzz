@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Edit Product | Febz Couture</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:'Inter',sans-serif;
+}
+
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:25px 70px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.logo-img{
+    width:64px;
+    height:64px;
+    border-radius:50%;
+}
+
+.logo-text{
+    font-family:'Playfair Display',serif;
+    font-size:28px;
+    letter-spacing:3px;
+}
+
+/* HEADER */
+.page-header{
+    text-align:center;
+    padding:80px 20px 40px;
+}
+
+.page-header h1{
+    font-family:'Playfair Display',serif;
+    font-size:46px;
+}
+
+/* FORM CARD */
+.form-container{
+    max-width:600px;
+    margin:40px auto 80px;
+    padding:40px;
+    border:1px solid rgba(255,255,255,0.15);
+    background:#050505;
+}
+
+.form-container label{
+    font-size:13px;
+    letter-spacing:1px;
+    color:rgba(255,255,255,0.7);
+}
+
+.form-container input,
+.form-container textarea{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    margin-bottom:20px;
+    background:#111;
+    border:1px solid rgba(255,255,255,0.2);
+    color:#fff;
+    font-size:14px;
+}
+
+.form-container textarea{
+    height:100px;
+    resize:none;
+}
+
+.update-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:#ffd7a0;
+    color:#000;
+    font-weight:bold;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.update-btn:hover{
+    background:#ffbf75;
+}
+
+.current-image{
+    margin-bottom:20px;
+}
+
+.current-image img{
+    width:140px;
+    border:1px solid rgba(255,255,255,0.2);
+}
+
+/* FOOTER */
+.footer{
+    padding:40px;
+    border-top:1px solid rgba(255,255,255,0.1);
+    text-align:center;
+    font-size:13px;
+    color:rgba(255,255,255,0.6);
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo-area">
+        <img src="{% static 'images/Febzlogo.jpeg' %}" class="logo-img">
+        <span class="logo-text">FEBZ COUTURE</span>
+    </div>
+</div>
+
+<!-- HEADER -->
+<section class="page-header">
+    <h1>Edit Product</h1>
+</section>
+
+<!-- FORM -->
+<div class="form-container">
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label>Product Name</label>
+    <input type="text" name="productname" value="{{ d.name }}" required>
+
+    <label>Price</label>
+    <input type="number" name="productprice" value="{{ d.price }}" required>
+
+    <label>Description</label>
+    <textarea name="productdescription" required>{{ d.description }}</textarea>
+
+    <label>Current Image</label>
+    {% if d.kidsimage %}
+    <div class="current-image">
+        <img src="{{ d.image.url }}">
+    </div>
+    {% endif %}
+
+    <label>Change Image</label>
+    <input type="file" name="productimage">
+
+    <button type="submit" class="update-btn">Update Product</button>
+
+</form>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 FEBZ COUTURE · Luxury Collection
+</div>
+
+</body>
+</html>
