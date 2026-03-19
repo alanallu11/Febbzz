@@ -3,7 +3,10 @@ from .models import Ladies
 from .models import Register,Ladies,Kids,Cart
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 # Create your views here.
+def home(re):
+    return HttpResponse("got it")
 def registerfn(re):
     if re.method == "POST":
         username=re.POST.get("username")
